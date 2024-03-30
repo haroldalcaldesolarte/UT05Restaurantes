@@ -10,16 +10,36 @@ class ManagerController{
   }
 
   onInit = () => {
-    console.log('onInit');
-    this[VIEW].init(this[MODEL].getCategories());
+    this[VIEW].init(this[MODEL].categories, this[MODEL].dishes);
+    this[VIEW].bindDishesOfCategoryList(this.handleShowDishesOfCategory);
+    this[VIEW].bindDishesofCategoryAside(this.handleShowDishesOfCategory);
+    this[VIEW].bindShowCategory(this.handleShowCategory);
+    this[VIEW].bindShowDish(this.handleShowDish);
   };
 
   handleInit = () => {
     this.onInit();
   }
 
+  handleShowDishesOfCategory = (serial) => {
+    const category = this[MODEL].categories[serial];
+    this[VIEW].listDishes(this[MODEL].getDishesInCategory(category), category.getName());
+    this[VIEW].bindShowDish(this.handleShowDish);
+    this[VIEW].bindInfoDishAside(this.handleShowDish);
+  }
+
+  handleShowCategory = (serial) => {
+    const category = this[MODEL].categories[serial]
+    this[VIEW].showCategory(category);
+  }
+
+  handleShowDish = (serial) => {
+    console.log('hola');
+    const dish = this[MODEL].dishes[serial];
+    this[VIEW].showDish(dish);
+  }
+
   onLoad = (categories, allergens, dishes, menus, restaurants) => {
-    console.log('onLoad');
     //Añadir todos los elementos
     for(const category of categories){
       this[MODEL].addCategory(category);

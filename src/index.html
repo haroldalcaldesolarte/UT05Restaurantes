@@ -53,15 +53,24 @@
         flex: 1;
       }
       main {
-        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
         margin-right: auto; /* Margen derecho automático para expandirse a la izquierda */
       }
+      .card {
+        flex: 0 0 calc(33.33% - 30px); /* Calcula el ancho de cada tarjeta para ocupar aproximadamente el 33.33% del ancho del contenedor principal, con un margen de 20px entre cada tarjeta */
+        margin: 10px;
+      }
       aside {
-        width: 200px;
+        width: 50%;
         margin-left: auto; /* Margen izquierdo automático para expandirse a la derecha */
       }
       footer {
         margin-top: auto; /* Empuja el footer hacia abajo */
+      }
+      hr {
+        width: 100%; /* Asegura que el hr tenga el ancho completo */
+        margin: 20px 0; /* Agrega un margen en la parte superior e inferior */
       }
     </style>
 </head>
@@ -73,7 +82,7 @@
 
     <nav>
         <ul>
-            <li><a href="#">Categorias</a></li>
+            <li><a id="nav-categories" href="#">Categorias</a></li>
             <li><a href="#">Alergenos</a></li>
             <li><a href="#">Menus</a></li>
             <li><a href="#">Restaurantes</a></li>

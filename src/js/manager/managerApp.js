@@ -23,11 +23,11 @@ const allergen3 = new Allergen('A3','Allergen3');
 const allergen4 = new Allergen('A4','Allergen4');
 const allergen5 = new Allergen('A5','Allergen5');
 
-const dish1 = new Dish('D1', 'Dish1');
-const dish2 = new Dish('D2', 'Dish2', ['tomate', 'cebolla', 'Arroz']);
-const dish3 = new Dish('D3', 'Dish3');
-const dish4 = new Dish('D4', 'Dish4');
-const dish5 = new Dish('D5', 'Dish5');
+const dish1 = new Dish('D1', 'Dish1', ['tomate', 'cebolla', 'pasta']);
+const dish2 = new Dish('D2', 'Dish2', ['tomate', 'cebolla', 'arroz']);
+const dish3 = new Dish('D3', 'Dish3', ['queso', 'albahaca','pepino']);
+const dish4 = new Dish('D4', 'Dish4', ['lomo', 'patatas', 'champiñones']);
+const dish5 = new Dish('D5', 'Dish5', ['huevo', 'patatas', 'cebolla']);
 
 const restaurant1 = new Restaurant('R1','Restaurant1', new Coordinate(2,5));
 const restaurant2 = new Restaurant('R2','Restaurant2', new Coordinate(4,15));

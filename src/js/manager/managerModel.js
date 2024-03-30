@@ -484,13 +484,9 @@ const Manager = (function () {
       return this;
     }
 
-    getDishesInCategory(category, filterFunction) {
+    getDishesInCategory(category) {
       if (!category || !(category instanceof Category)) {
         throw new Error('No es un objeto válido, es null o no es Category.');
-      }
-
-      if (typeof filterFunction !== 'function') {
-        throw new Error('La función de filtro no es válida.');
       }
 
       const position = this.#getCategoryPosition(category);
