@@ -15,7 +15,9 @@ class ManagerController{
     this[VIEW].bindDishesofCategoryAside(this.handleShowDishesOfCategory);
     this[VIEW].bindShowCategory(this.handleShowCategory);
     this[VIEW].bindShowDish(this.handleShowDish);
-    this[VIEW].bindAllergenMenu(this.handleShowAllergens);
+    this[VIEW].bindAllergenDishes(this.handleShowAllergens);
+    this[VIEW].bindDishesMenu(this.handleShowMenus);
+    this[VIEW].bindShowDishesOnMenu(this.handleShowDishesOnMenu);
   };
 
   handleInit = () => {
@@ -34,8 +36,13 @@ class ManagerController{
     this[VIEW].showCategory(category);
   }
 
-  handleShowDish = (serial) => {
+  /*handleShowDish = (serial) => {
     const dish = this[MODEL].dishes[serial];
+    this[VIEW].showDish(dish);
+  }*/
+
+  handleShowDish = (DishName) => {
+    const dish = this[MODEL].dishes.find(dish => dish.dish.name === DishName);
     this[VIEW].showDish(dish);
   }
 
@@ -44,9 +51,20 @@ class ManagerController{
     this[VIEW].bindShowDishesWithAllergen(this.handleShowDishesWithAllergen);
   }
 
+  handleShowMenus = () => {
+    this[VIEW].showMenus(this[MODEL].menus);
+    this[VIEW].bindShowDishesOnMenu(this.handleShowDishesOnMenu);
+  }
+
   handleShowDishesWithAllergen = (serial) => {
     const allergen = this[MODEL].allergens[serial];
     this[VIEW].listDishesAllergen(this[MODEL].getDishesWithAllergen(allergen), allergen.getName());
+    this[VIEW].bindShowDish(this.handleShowDish);
+  }
+
+  handleShowDishesOnMenu = (MenuName) => {
+    const menu = this[MODEL].menus.find(menu => menu.menu.name === MenuName);
+    this[VIEW].listDishesMenu(menu.dishes, menu.menu.name);
     this[VIEW].bindShowDish(this.handleShowDish);
   }
 

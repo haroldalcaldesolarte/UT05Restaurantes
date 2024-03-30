@@ -119,7 +119,7 @@ class ManagerView {
     const linkPlato = this.main.querySelectorAll('.ver-plato');
     for (const link of linkPlato){
       link.addEventListener('click', (event) => {
-        handler(event.currentTarget.dataset.serial);
+        handler(event.currentTarget.dataset.name);
       });
     }
   }
@@ -128,7 +128,7 @@ class ManagerView {
     const platosLinksAside = this.aside.querySelectorAll('a');
     for (const link of platosLinksAside){
       link.addEventListener('click', (event) => {
-        handler(event.currentTarget.dataset.serial);
+        handler(event.currentTarget.dataset.name);
       });
     }
   }
@@ -142,6 +142,20 @@ class ManagerView {
         <h5 class="card-title">${allergen.getName()}</h5>
         <p class="card-text">${allergen.getDescription()}</p>
         <a href="#" data-serial="${position}" data-name="${allergen.getName()}" class="card-link ver-plato-alergeno">Platos con este alergeno</a>
+      </div>
+    </div>`);
+    }
+  }
+
+  showMenus(menus){
+    this.main.replaceChildren();
+    for(const menu of menus){
+      const position = menus.indexOf(menu);
+      this.main.insertAdjacentHTML('beforeend',`<div class="card" style="width: 70rem;">
+      <div class="card-body">
+        <h5 class="card-title">${menu.menu.name}</h5>
+        <p class="card-text">${menu.menu.description}</p>
+        <a href="#" data-serial="${position}" data-name="${menu.menu.name}" class="card-link ver-plato-menu">Platos del menu</a>
       </div>
     </div>`);
     }
@@ -165,8 +179,32 @@ class ManagerView {
     this.aside.innerHTML = `<h5>Platos</h5><ul>${asideContent}</ul>`;
   }
 
-  bindAllergenMenu(handler){
+  listDishesMenu(dishes, MenuName) {
+    let asideContent = '';
+    this.main.replaceChildren();
+    this.main.insertAdjacentHTML('beforeend',`<h4>Menu: ${MenuName}</h4>`);
+    for(const dish of dishes){
+      const position = dishes.indexOf(dish);
+      this.main.insertAdjacentHTML('beforeend',`<div class="card" style="width: 70rem;">
+      <div class="card-body">
+        <h5 class="card-title">${dish.dish.name}</h5>
+        <p class="card-text">${dish.dish.description}</p>
+        <a href="#" data-serial="${position}" data-name="${dish.dish.name}" class="card-link ver-plato">Información</a>
+      </div>
+    </div>`);
+    asideContent += `<li><a href="#" data-serial="${position}" data-name="${dish.dish.name}">${dish.dish.name}</a></li>`;
+    }
+    this.aside.innerHTML = `<h5>Platos</h5><ul>${asideContent}</ul>`;
+  }
+
+  bindAllergenDishes(handler){
     document.getElementById('nav-alergenos').addEventListener('click', (event) => {
+      handler();
+    });
+  }
+
+  bindDishesMenu(handler){
+    document.getElementById('nav-menus').addEventListener('click', (event) => {
       handler();
     });
   }
@@ -176,6 +214,15 @@ class ManagerView {
     for (const link of verPlatosLinks){
       link.addEventListener('click', (event) => {
         handler(event.currentTarget.dataset.serial);
+      });
+    }
+  }
+
+  bindShowDishesOnMenu(handler){
+    const verPlatosLinks = this.main.querySelectorAll('.ver-plato-menu');
+    for (const link of verPlatosLinks){
+      link.addEventListener('click', (event) => {
+        handler(event.currentTarget.dataset.name);
       });
     }
   }
