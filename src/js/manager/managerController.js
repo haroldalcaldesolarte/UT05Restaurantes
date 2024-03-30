@@ -15,6 +15,7 @@ class ManagerController{
     this[VIEW].bindDishesofCategoryAside(this.handleShowDishesOfCategory);
     this[VIEW].bindShowCategory(this.handleShowCategory);
     this[VIEW].bindShowDish(this.handleShowDish);
+    this[VIEW].bindAllergenMenu(this.handleShowAllergens);
   };
 
   handleInit = () => {
@@ -34,9 +35,19 @@ class ManagerController{
   }
 
   handleShowDish = (serial) => {
-    console.log('hola');
     const dish = this[MODEL].dishes[serial];
     this[VIEW].showDish(dish);
+  }
+
+  handleShowAllergens = () => {
+    this[VIEW].showAllergens(this[MODEL].allergens);
+    this[VIEW].bindShowDishesWithAllergen(this.handleShowDishesWithAllergen);
+  }
+
+  handleShowDishesWithAllergen = (serial) => {
+    const allergen = this[MODEL].allergens[serial];
+    this[VIEW].listDishesAllergen(this[MODEL].getDishesWithAllergen(allergen), allergen.getName());
+    this[VIEW].bindShowDish(this.handleShowDish);
   }
 
   onLoad = (categories, allergens, dishes, menus, restaurants) => {

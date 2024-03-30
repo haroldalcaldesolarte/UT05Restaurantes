@@ -133,6 +133,53 @@ class ManagerView {
     }
   }
 
+  showAllergens(allergens){
+    this.main.replaceChildren();
+    for(const allergen of allergens){
+      const position = allergens.indexOf(allergen);
+      this.main.insertAdjacentHTML('beforeend',`<div class="card" style="width: 70rem;">
+      <div class="card-body">
+        <h5 class="card-title">${allergen.getName()}</h5>
+        <p class="card-text">${allergen.getDescription()}</p>
+        <a href="#" data-serial="${position}" data-name="${allergen.getName()}" class="card-link ver-plato-alergeno">Platos con este alergeno</a>
+      </div>
+    </div>`);
+    }
+  }
+
+  listDishesAllergen(dishes, AllergenName) {
+    let asideContent = '';
+    this.main.replaceChildren();
+    this.main.insertAdjacentHTML('beforeend',`<h4>Alergeno: ${AllergenName}</h4>`);
+    for(const dish of dishes){
+      const position = dishes.indexOf(dish);
+      this.main.insertAdjacentHTML('beforeend',`<div class="card" style="width: 70rem;">
+      <div class="card-body">
+        <h5 class="card-title">${dish.name}</h5>
+        <p class="card-text">${dish.description}</p>
+        <a href="#" data-serial="${position}" data-name="${dish.name}" class="card-link ver-plato">Información</a>
+      </div>
+    </div>`);
+    asideContent += `<li><a href="#" data-serial="${position}" data-name="${dish.name}">${dish.name}</a></li>`;
+    }
+    this.aside.innerHTML = `<h5>Platos</h5><ul>${asideContent}</ul>`;
+  }
+
+  bindAllergenMenu(handler){
+    document.getElementById('nav-alergenos').addEventListener('click', (event) => {
+      handler();
+    });
+  }
+
+  bindShowDishesWithAllergen(handler){
+    const verPlatosLinks = this.main.querySelectorAll('.ver-plato-alergeno');
+    for (const link of verPlatosLinks){
+      link.addEventListener('click', (event) => {
+        handler(event.currentTarget.dataset.serial);
+      });
+    }
+  }
+
   bindInit(handler){
     document.getElementById('inicio').addEventListener('click', (event) => {
       handler();

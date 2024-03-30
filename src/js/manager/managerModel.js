@@ -507,13 +507,9 @@ const Manager = (function () {
       return dishesInCategory
     }
 
-    getDishesWithAllergen(allergen, filterFunction) {
+    getDishesWithAllergen(allergen) {
       if (!allergen || !(allergen instanceof Allergen)) {
         throw new Error('No es un objeto válido, es null o no es Allergen.');
-      }
-
-      if (typeof filterFunction !== 'function') {
-        throw new Error('La función de filtro no es válida.');
       }
 
       const position = this.#getAllergenPosition(allergen);
