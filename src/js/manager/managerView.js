@@ -2,6 +2,7 @@ class ManagerView {
   constructor(){
     this.main = document.getElementById('principal');
     this.aside = document.getElementById('menu_lateral');
+    this.menu = document.getElementById('navbar-nav');
   }
 
   init(categories, dishes) {//en este init debo recoger las categorias y listarlas antes se debe hacer en OnLoad
@@ -53,6 +54,67 @@ class ManagerView {
     asideContent += `<li><a href="#" data-serial="${position}" data-name="${dish.name}">${dish.name}</a></li>`;
     }
     this.aside.innerHTML = `<h5>Platos</h5><ul>${asideContent}</ul>`;
+  }
+
+  showRestaurantsInMenu(restaurants) {
+    const dropdownMenu = document.getElementById('nav-restaurants');
+    if (dropdownMenu === null) {
+      const li = document.createElement('li');
+      li.classList.add('nav-item');
+      li.classList.add('dropdown');
+      li.insertAdjacentHTML('beforeend', `<a class="dropdown-toggle" href="#" id="nav-restaurants" role="button"
+        data-bs-toggle="dropdown" aria-expanded="false">Restaurantes</a>`);
+      const container = document.createElement('ul');
+      container.classList.add('dropdown-menu');
+
+      for (const restaurant of restaurants) {
+        container.insertAdjacentHTML('beforeend', `<li><a data-name="${restaurant.restaurant.name}" class="dropdown-item" href="#product-list">${restaurant.restaurant.name}</a></li>`);
+      }
+      li.append(container);
+      this.menu.append(li);
+    }
+  }
+
+  ShowOptionRestaurants(){ //Pensaba que el dropdown ya tenia esto tampoco vi nada parecido en el ejemplo
+    const dropdownMenu = document.getElementById('nav-restaurants');
+    const listMenu = dropdownMenu.nextElementSibling;
+
+    if (dropdownMenu.classList.contains('show') && listMenu.classList.contains('show')){
+      dropdownMenu.classList.remove('show');
+      listMenu.classList.remove('show');
+    }else {
+      dropdownMenu.classList.add('show');
+      listMenu.classList.add('show');
+    }
+  }
+
+  bindShowHideOptionRestaurants(handler){
+    const dropdownMenu = document.getElementById('nav-restaurants');
+    dropdownMenu.addEventListener('click', (event) => {
+      handler();
+    });
+  }
+
+  showRestaurant(restaurant){
+    this.main.replaceChildren();
+    this.main.insertAdjacentHTML('beforeend',
+      `<div class="card" style="width: 70rem;">
+        <div class="card-body">
+          <h5 class="card-title">Nombre: ${restaurant.name}</h5>
+          <p class="card-text">Descripción: ${restaurant.description}</p>
+          <p class="card-text">${restaurant.location}</p>
+        </div>
+      </div>`);
+  }
+
+  bindShowRestaurant(handler){
+    const navCats = document.getElementById('nav-restaurants');
+    const links = navCats.nextSibling.querySelectorAll('a');
+    for (const link of links){
+      link.addEventListener('click', (event) => {
+        handler(event.currentTarget.dataset.name);
+      });
+    }
   }
 
   bindDishesOfCategoryList(handler){

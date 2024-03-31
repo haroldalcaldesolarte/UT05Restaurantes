@@ -11,6 +11,9 @@ class ManagerController{
 
   onInit = () => {
     this[VIEW].init(this[MODEL].categories, this[MODEL].dishes);
+    this[VIEW].showRestaurantsInMenu(this[MODEL].restaurants);
+    this[VIEW].bindShowHideOptionRestaurants(this.handleShowOptionRestaurants);
+    this[VIEW].bindShowRestaurant(this.handleShowRestaurant);
     this[VIEW].bindDishesOfCategoryList(this.handleShowDishesOfCategory);
     this[VIEW].bindDishesofCategoryAside(this.handleShowDishesOfCategory);
     this[VIEW].bindShowCategory(this.handleShowCategory);
@@ -24,6 +27,10 @@ class ManagerController{
     this.onInit();
   }
 
+  handleShowOptionRestaurants = () => {
+    this[VIEW].ShowOptionRestaurants();
+  }
+
   handleShowDishesOfCategory = (serial) => {
     const category = this[MODEL].categories[serial];
     this[VIEW].listDishes(this[MODEL].getDishesInCategory(category), category.getName());
@@ -34,6 +41,11 @@ class ManagerController{
   handleShowCategory = (serial) => {
     const category = this[MODEL].categories[serial]
     this[VIEW].showCategory(category);
+  }
+
+  handleShowRestaurant = (RestaurantName) => {
+    const restaurant = this[MODEL].restaurants.find(restaurant => restaurant.restaurant.name === RestaurantName);
+    this[VIEW].showRestaurant(restaurant.restaurant);
   }
 
   /*handleShowDish = (serial) => {
